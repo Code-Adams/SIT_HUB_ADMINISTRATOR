@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "1095155499512",
+    "firebase_url": "https://sit-hub-master.firebaseio.com",
+    "project_id": "sit-hub-master",
+    "storage_bucket": "sit-hub-master.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1095155499512:android:6f198d18411f7844de960d",
+        "android_client_info": {
+          "package_name": "com.SakshmBhat.sit_hub_administrator"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1095155499512-243k7f0lptkbq0dcdqu5058mt89ejihv.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.SakshmBhat.sit_hub_administrator",
+            "certificate_hash": "9bc4f60116cfd1499ffc787d5ce8450ce69743d8"
+          }
+        },
+        {
+          "client_id": "1095155499512-sds59625p7r7dad3vktr61cghupbftgl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAb6UuDno-MQhYAjTwxcUN7S_QjyD9vJnE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1095155499512-sds59625p7r7dad3vktr61cghupbftgl.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

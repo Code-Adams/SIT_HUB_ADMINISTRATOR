@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">SIT_HUB_ADMINISTRATOR</string>
+    <string name="Upload_Feed">Upload Feed</string>
+    <string name="Upload_Image_To_Gallery">Add Pictures</string>
+    <string name="Upload_Ebook">Add Ebook</string>
+    <string name="Remove_Feed">Remove Feed</string>
+    <string name="Edit_Faculty">Edit Faculty</string>
+    <string name="Select_Image">Select Image</string>
+    <string name="Feed_Title">Feed Title</string>
+    <string name="Upload_Feed_Button_Text">Upload Feed</string>
+    <string name="Upload_Gallery_Image_Button_Text">Upload Image</string>
+    <!--    <string name="Dropdown_Hint">Select category</string>-->
+    <string name="Select_Ebook">Select Ebook</string>
+    <string name="Ebook_Title">Ebook title</string>
+    <string name="Upload_Ebook_Button_Text">Upload Ebook</string>
+    <string name="No_File_Selected">No file selected</string>
+    <string name="Name">Name</string>
+    <string name="Upload_Teacher_Button_Text">Add Faculty</string>
+</resources>
