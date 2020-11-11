@@ -16,4 +16,6 @@
     <string name="No_File_Selected">No file selected</string>
     <string name="Name">Name</string>
     <string name="Upload_Teacher_Button_Text">Add Faculty</string>
+    <string name="Email">Email</string>
+    <string name="Post">Post</string>
 </resources>
