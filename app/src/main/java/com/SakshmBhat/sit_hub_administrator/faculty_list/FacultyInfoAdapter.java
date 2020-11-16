@@ -25,11 +25,13 @@ public class FacultyInfoAdapter extends  RecyclerView.Adapter<FacultyInfoAdapter
 
     private List<FacultyAttributes> list;
     private Context context;
+    private String category;
 
     //Constructor for list and context
-    public FacultyInfoAdapter(List<FacultyAttributes> list, Context context) {
-        this.list = list;
-        this.context = context;
+    public FacultyInfoAdapter(List<FacultyAttributes> passedList, Context passedContext, String passedCategory) {
+        this.list = passedList;
+        this.context = passedContext;
+        this.category=passedCategory;
     }
 
     @NonNull
@@ -66,6 +68,8 @@ public class FacultyInfoAdapter extends  RecyclerView.Adapter<FacultyInfoAdapter
                 intent.putExtra("post",facultyAttributes.getPost());
                 intent.putExtra("email",facultyAttributes.getEmail());
                 intent.putExtra("imageUrl",facultyAttributes.getImageUrl());
+                intent.putExtra("key",facultyAttributes.getKey());
+                intent.putExtra("category",category);
                 context.startActivity(intent);
                 
             }

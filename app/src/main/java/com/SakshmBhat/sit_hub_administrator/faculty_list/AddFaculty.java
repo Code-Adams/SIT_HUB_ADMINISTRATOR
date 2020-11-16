@@ -33,6 +33,8 @@ import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -126,6 +128,11 @@ public class AddFaculty extends AppCompatActivity {
             facultyEmail.setError("E-mail required!");
             facultyEmail.requestFocus();
 
+        }else if(!isEmailValid(email)){
+
+            facultyEmail.setError("Invalid e-mail format!");
+            facultyEmail.requestFocus();
+
         }else if(post.isEmpty()){
 
             facultyPost.setError("Post required!");
@@ -133,7 +140,7 @@ public class AddFaculty extends AppCompatActivity {
 
         }else if(deptSelected.equals("Select Department")){
 
-            Toast.makeText(this, "Error: No department selected! Select one to proceed.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(AddFaculty.this, "Error: No department selected! Select one to proceed.", Toast.LENGTH_SHORT).show();
             
         }else if(bitmap==null){
 
@@ -170,6 +177,15 @@ public class AddFaculty extends AppCompatActivity {
         }
 
     }
+
+    //This function checks if email is in proper format
+    public static boolean isEmailValid(String email) {
+        String expression = "^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{2,4}$";
+        Pattern pattern = Pattern.compile(expression, Pattern.CASE_INSENSITIVE);
+        Matcher matcher = pattern.matcher(email);
+        return matcher.matches();
+    }
+
 
     private void uploadImageMethod() {
 

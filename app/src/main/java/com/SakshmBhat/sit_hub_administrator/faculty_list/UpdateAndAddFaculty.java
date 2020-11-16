@@ -137,7 +137,7 @@ public class UpdateAndAddFaculty extends AppCompatActivity {
                     }
                     AandNT.setHasFixedSize(true);
                     AandNT.setLayoutManager(new LinearLayoutManager(UpdateAndAddFaculty.this));
-                    recyclerAdapter = new FacultyInfoAdapter(AandNT_list, UpdateAndAddFaculty.this);
+                    recyclerAdapter = new FacultyInfoAdapter(AandNT_list, UpdateAndAddFaculty.this,"Administration and Non-teaching");
                     AandNT.setAdapter(recyclerAdapter);
 
                 }
@@ -182,7 +182,7 @@ public class UpdateAndAddFaculty extends AppCompatActivity {
                     }
                     Architecture.setHasFixedSize(true);
                     Architecture.setLayoutManager(new LinearLayoutManager(UpdateAndAddFaculty.this));
-                    recyclerAdapter = new FacultyInfoAdapter(Architecture_list, UpdateAndAddFaculty.this);
+                    recyclerAdapter = new FacultyInfoAdapter(Architecture_list, UpdateAndAddFaculty.this,"Architecture");
                     Architecture.setAdapter(recyclerAdapter);
 
                 }
@@ -227,7 +227,7 @@ public class UpdateAndAddFaculty extends AppCompatActivity {
                     }
                     MBA.setHasFixedSize(true);
                     MBA.setLayoutManager(new LinearLayoutManager(UpdateAndAddFaculty.this));
-                    recyclerAdapter = new FacultyInfoAdapter(MBA_list, UpdateAndAddFaculty.this);
+                    recyclerAdapter = new FacultyInfoAdapter(MBA_list, UpdateAndAddFaculty.this,"MBA");
                     MBA.setAdapter(recyclerAdapter);
 
                 }
@@ -272,7 +272,7 @@ public class UpdateAndAddFaculty extends AppCompatActivity {
                     }
                     BT.setHasFixedSize(true);
                     BT.setLayoutManager(new LinearLayoutManager(UpdateAndAddFaculty.this));
-                    recyclerAdapter = new FacultyInfoAdapter(BT_list, UpdateAndAddFaculty.this);
+                    recyclerAdapter = new FacultyInfoAdapter(BT_list, UpdateAndAddFaculty.this,"BT");
                     BT.setAdapter(recyclerAdapter);
 
                 }
@@ -317,7 +317,7 @@ public class UpdateAndAddFaculty extends AppCompatActivity {
                     }
                     Chemistry.setHasFixedSize(true);
                     Chemistry.setLayoutManager(new LinearLayoutManager(UpdateAndAddFaculty.this));
-                    recyclerAdapter = new FacultyInfoAdapter(Chemistry_list, UpdateAndAddFaculty.this);
+                    recyclerAdapter = new FacultyInfoAdapter(Chemistry_list, UpdateAndAddFaculty.this,"Chemistry");
                     Chemistry.setAdapter(recyclerAdapter);
 
                 }
@@ -362,7 +362,7 @@ public class UpdateAndAddFaculty extends AppCompatActivity {
                     }
                     Physics.setHasFixedSize(true);
                     Physics.setLayoutManager(new LinearLayoutManager(UpdateAndAddFaculty.this));
-                    recyclerAdapter = new FacultyInfoAdapter(Physics_list, UpdateAndAddFaculty.this);
+                    recyclerAdapter = new FacultyInfoAdapter(Physics_list, UpdateAndAddFaculty.this,"Physics");
                     Physics.setAdapter(recyclerAdapter);
 
                 }
@@ -407,7 +407,7 @@ public class UpdateAndAddFaculty extends AppCompatActivity {
                     }
                     Maths.setHasFixedSize(true);
                     Maths.setLayoutManager(new LinearLayoutManager(UpdateAndAddFaculty.this));
-                    recyclerAdapter = new FacultyInfoAdapter(Maths_list, UpdateAndAddFaculty.this);
+                    recyclerAdapter = new FacultyInfoAdapter(Maths_list, UpdateAndAddFaculty.this,"Maths");
                     Maths.setAdapter(recyclerAdapter);
 
                 }
@@ -452,7 +452,7 @@ public class UpdateAndAddFaculty extends AppCompatActivity {
                     }
                     CE.setHasFixedSize(true);
                     CE.setLayoutManager(new LinearLayoutManager(UpdateAndAddFaculty.this));
-                    recyclerAdapter = new FacultyInfoAdapter(CE_list, UpdateAndAddFaculty.this);
+                    recyclerAdapter = new FacultyInfoAdapter(CE_list, UpdateAndAddFaculty.this,"CE");
                     CE.setAdapter(recyclerAdapter);
 
                 }
@@ -497,7 +497,7 @@ public class UpdateAndAddFaculty extends AppCompatActivity {
                     }
                     EIE.setHasFixedSize(true);
                     EIE.setLayoutManager(new LinearLayoutManager(UpdateAndAddFaculty.this));
-                    recyclerAdapter = new FacultyInfoAdapter(EIE_list, UpdateAndAddFaculty.this);
+                    recyclerAdapter = new FacultyInfoAdapter(EIE_list, UpdateAndAddFaculty.this,"EIE");
                     EIE.setAdapter(recyclerAdapter);
 
                 }
@@ -542,7 +542,7 @@ public class UpdateAndAddFaculty extends AppCompatActivity {
                     }
                     IEM.setHasFixedSize(true);
                     IEM.setLayoutManager(new LinearLayoutManager(UpdateAndAddFaculty.this));
-                    recyclerAdapter = new FacultyInfoAdapter(IEM_list, UpdateAndAddFaculty.this);
+                    recyclerAdapter = new FacultyInfoAdapter(IEM_list, UpdateAndAddFaculty.this,"IEM");
                     IEM.setAdapter(recyclerAdapter);
 
                 }
@@ -587,7 +587,7 @@ public class UpdateAndAddFaculty extends AppCompatActivity {
                     }
                     TE.setHasFixedSize(true);
                     TE.setLayoutManager(new LinearLayoutManager(UpdateAndAddFaculty.this));
-                    recyclerAdapter = new FacultyInfoAdapter(TE_list, UpdateAndAddFaculty.this);
+                    recyclerAdapter = new FacultyInfoAdapter(TE_list, UpdateAndAddFaculty.this,"TE");
                     TE.setAdapter(recyclerAdapter);
 
                 }
@@ -632,7 +632,7 @@ public class UpdateAndAddFaculty extends AppCompatActivity {
                     }
                     ME.setHasFixedSize(true);
                     ME.setLayoutManager(new LinearLayoutManager(UpdateAndAddFaculty.this));
-                    recyclerAdapter = new FacultyInfoAdapter(ME_list, UpdateAndAddFaculty.this);
+                    recyclerAdapter = new FacultyInfoAdapter(ME_list, UpdateAndAddFaculty.this,"ME");
                     ME.setAdapter(recyclerAdapter);
 
                 }
@@ -677,7 +677,7 @@ public class UpdateAndAddFaculty extends AppCompatActivity {
                     }
                     ECE.setHasFixedSize(true);
                     ECE.setLayoutManager(new LinearLayoutManager(UpdateAndAddFaculty.this));
-                    recyclerAdapter = new FacultyInfoAdapter(ECE_list, UpdateAndAddFaculty.this);
+                    recyclerAdapter = new FacultyInfoAdapter(ECE_list, UpdateAndAddFaculty.this,"ECE");
                     ECE.setAdapter(recyclerAdapter);
 
                 }
@@ -722,7 +722,7 @@ public class UpdateAndAddFaculty extends AppCompatActivity {
                     }
                     CSE.setHasFixedSize(true);
                     CSE.setLayoutManager(new LinearLayoutManager(UpdateAndAddFaculty.this));
-                    recyclerAdapter = new FacultyInfoAdapter(CSE_list, UpdateAndAddFaculty.this);
+                    recyclerAdapter = new FacultyInfoAdapter(CSE_list, UpdateAndAddFaculty.this,"CSE");
                     CSE.setAdapter(recyclerAdapter);
 
                 }
@@ -766,7 +766,7 @@ public class UpdateAndAddFaculty extends AppCompatActivity {
                    }
                    ISE.setHasFixedSize(true);
                    ISE.setLayoutManager(new LinearLayoutManager(UpdateAndAddFaculty.this));
-                   recyclerAdapter = new FacultyInfoAdapter(ISE_list, UpdateAndAddFaculty.this);
+                   recyclerAdapter = new FacultyInfoAdapter(ISE_list, UpdateAndAddFaculty.this,"ISE");
                    ISE.setAdapter(recyclerAdapter);
 
                 }
