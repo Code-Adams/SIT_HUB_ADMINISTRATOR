@@ -1,217 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
     tools:context=".faculty_list.UpdateFaculty">
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/floatingAB"
-        style="@style/Widget.Design.FloatingActionButton"
-        android:layout_gravity="bottom|right"
-        android:layout_margin="16dp"
-        android:src="@drawable/ic_add_sign"
-        android:elevation="10dp"
-        app:fabSize="normal"/>
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:id="@+id/clickToUpdateFacultyImage"
+        android:layout_gravity="center_horizontal"
+        android:src="@drawable/user"
+        android:layout_marginTop="36dp"/>
 
-    <androidx.core.widget.NestedScrollView
+    <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
-        <LinearLayout
+
+        <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/Computer_Science_And_Engineering"
-                android:gravity="center"
-                android:textSize="22sp"
-                android:textColor="@color/textColour"
-                android:textStyle="bold"
-                android:layout_marginTop="18dp"/>
-
-<!--           Using simply a view to show a line below dept. name-->
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginVertical="8dp"
-                android:background="#c1c1c1"/>
+            android:layout_height="wrap_content"
+            android:hint="@string/Name"
+            android:id="@+id/updatedFacultyName"/>
+    </com.google.android.material.textfield.TextInputLayout><com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
 
-            <!--                Disable scrolling here cause already using nested scroll view and scrolling is not required here-->
-            <androidx.recyclerview.widget.RecyclerView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:visibility="gone"
-                android:id="@+id/CSEFacultyRecycler"
-                android:nestedScrollingEnabled="false"/>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:id="@+id/CSEfacultyDataNotFound">
-
-                <include layout="@layout/no_data_available_card"/>
-
-            </LinearLayout>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/Information_Science_engineering"
-                android:gravity="center"
-                android:textSize="22sp"
-                android:textColor="@color/textColour"
-                android:textStyle="bold"
-                android:layout_marginTop="18dp"/>
-
-<!--           Using simply a view to show a line below dept. name-->
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginVertical="8dp"
-                android:background="#c1c1c1"/>
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/Post"
+            android:id="@+id/updatedFacultyPost"/>
+    </com.google.android.material.textfield.TextInputLayout><com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
 
-            <!--                Disable scrolling here cause already using nested scroll view and scrolling is not required here-->
-            <androidx.recyclerview.widget.RecyclerView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:visibility="gone"
-                android:id="@+id/ISEFacultyRecycler"
-                android:nestedScrollingEnabled="false"/>
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/Email"
+            android:inputType="textEmailAddress"
+            android:id="@+id/updatedFacultyEmail"/>
+    </com.google.android.material.textfield.TextInputLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:id="@+id/ISEfacultyDataNotFound">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="2"
+        android:layout_marginTop="50dp"
+        android:orientation="horizontal">
+        
+        <com.google.android.material.button.MaterialButton
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/Update"
+            android:textAllCaps="false"
+            android:layout_marginHorizontal="5dp"
+            android:id="@+id/clickToProceedUpdationOfFacultyInfoBtn"/>
 
-                <include layout="@layout/no_data_available_card"/>
-
-            </LinearLayout>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/Mechanical_Engineering"
-                android:gravity="center"
-                android:textSize="22sp"
-                android:textColor="@color/textColour"
-                android:textStyle="bold"
-                android:layout_marginTop="18dp"/>
-
-<!--           Using simply a view to show a line below dept. name-->
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginVertical="8dp"
-                android:background="#c1c1c1"/>
-
-
-            <!--                Disable scrolling here cause already using nested scroll view and scrolling is not required here-->
-            <androidx.recyclerview.widget.RecyclerView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:visibility="gone"
-                android:id="@+id/MEFacultyRecycler"
-                android:nestedScrollingEnabled="false"/>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:id="@+id/MEfacultyDataNotFound">
-
-                <include layout="@layout/no_data_available_card"/>
-
-            </LinearLayout>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/Electronics_And_Communication_Engineering"
-                android:gravity="center"
-                android:textSize="22sp"
-                android:textColor="@color/textColour"
-                android:textStyle="bold"
-                android:layout_marginTop="18dp"/>
-
-            <!--           Using simply a view to show a line below dept. name-->
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginVertical="8dp"
-                android:background="#c1c1c1"/>
+        <com.google.android.material.button.MaterialButton
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/Delete_Faculty"
+            android:textAllCaps="false"
+            android:layout_marginHorizontal="5dp"
+            android:id="@+id/clickToDeleteFacultyBtn"/>
+        
+        
+    </LinearLayout>
 
 
-            <!--                Disable scrolling here cause already using nested scroll view and scrolling is not required here-->
-            <androidx.recyclerview.widget.RecyclerView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:visibility="gone"
-                android:id="@+id/ECEFacultyRecycler"
-                android:nestedScrollingEnabled="false"/>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:id="@+id/ECEfacultyDataNotFound">
-
-                <include layout="@layout/no_data_available_card"/>
-
-            </LinearLayout>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/Telecommunication_Engineering"
-                android:gravity="center"
-                android:textSize="22sp"
-                android:textColor="@color/textColour"
-                android:textStyle="bold"
-                android:layout_marginTop="18dp"/>
-
-            <!--           Using simply a view to show a line below dept. name-->
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginVertical="8dp"
-                android:background="#c1c1c1"/>
-
-
-            <!--                Disable scrolling here cause already using nested scroll view and scrolling is not required here-->
-            <androidx.recyclerview.widget.RecyclerView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:visibility="gone"
-                android:id="@+id/TEFacultyRecycler"
-                android:nestedScrollingEnabled="false"/>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:id="@+id/TEfacultyDataNotFound">
-
-                <include layout="@layout/no_data_available_card"/>
-
-            </LinearLayout>
-
-
-
-
-        </LinearLayout>
-
-    </androidx.core.widget.NestedScrollView>
-
-
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+</LinearLayout>

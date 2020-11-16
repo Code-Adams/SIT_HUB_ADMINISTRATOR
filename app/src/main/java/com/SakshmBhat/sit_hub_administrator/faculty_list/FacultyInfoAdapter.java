@@ -1,6 +1,7 @@
 package com.SakshmBhat.sit_hub_administrator.faculty_list;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,18 +46,27 @@ public class FacultyInfoAdapter extends  RecyclerView.Adapter<FacultyInfoAdapter
     @Override
     public void onBindViewHolder(@NonNull facultyInfoViewAdapter holder, int position) {
 
-        FacultyAttributes facultyAttributes = list.get(position);
+        final FacultyAttributes facultyAttributes = list.get(position);
         holder.name.setText(facultyAttributes.getName());
         holder.post.setText(facultyAttributes.getEmail());
         holder.email.setText(facultyAttributes.getPost());
 
-        Picasso.get().load(facultyAttributes.getImageUrl()).into(holder.facultyCircleImageview);
+        try {
+            Picasso.get().load(facultyAttributes.getImageUrl()).into(holder.facultyCircleImageview);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         holder.updateInfoBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                Toast.makeText(context, "Update faculty info", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(context,UpdateFaculty.class);
+                intent.putExtra("name",facultyAttributes.getName());
+                intent.putExtra("post",facultyAttributes.getPost());
+                intent.putExtra("email",facultyAttributes.getEmail());
+                intent.putExtra("imageUrl",facultyAttributes.getImageUrl());
+                context.startActivity(intent);
                 
             }
         });

@@ -17,13 +17,10 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.SakshmBhat.sit_hub_administrator.FeedData;
 import com.SakshmBhat.sit_hub_administrator.R;
-import com.SakshmBhat.sit_hub_administrator.UploadFeed;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -36,12 +33,10 @@ import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class AddTeacher extends AppCompatActivity {
+public class AddFaculty extends AppCompatActivity {
 
     private CircleImageView teacherImageView;
     private EditText facultyName, facultyEmail, facultyPost;
@@ -64,7 +59,7 @@ public class AddTeacher extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_teacher);
+        setContentView(R.layout.activity_add_faculty);
 
         teacherImageView = findViewById(R.id.teacherCircleImageClickToAddImg);
         facultyName = findViewById(R.id.teacherNameField);
@@ -77,7 +72,7 @@ public class AddTeacher extends AppCompatActivity {
 
         storageReference  = FirebaseStorage.getInstance().getReference();
 
-        String[] spinnerDeptList = new String[]{"Select Department","ISE","CSE","ECE","ME","TE","EIE","Maths","Physics","Chemistry","BT","MBA","Architecture","IE","Accounts","College Administration"};
+        String[] spinnerDeptList = new String[]{"Select Department","ISE","CSE","ECE","ME","TE","EIE","CE","IE","IEM","Maths","Physics","Chemistry","BT","MBA","Architecture","Administration and Non-teaching"};
 
         //Give categories listed in 'items' to the spinner(drop down)
         facultyDeptSpinner.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item,spinnerDeptList));
@@ -144,7 +139,7 @@ public class AddTeacher extends AppCompatActivity {
 
            //If image is not selected confirm from user if he/she is sure?
             //First build a dialog
-            dialogBuilder = new AlertDialog.Builder(AddTeacher.this);
+            dialogBuilder = new AlertDialog.Builder(AddFaculty.this);
             dialogBuilder.setTitle("Proceed without an image?");
             //Create negative and positive responses and add click listener to them.
             dialogBuilder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
@@ -198,7 +193,7 @@ public class AddTeacher extends AppCompatActivity {
         final UploadTask uploadTask = imageFilePath.putBytes(finalImageForUpload);
 
         //add complete task listener to get path(URL) of image and store it in database
-        uploadTask.addOnCompleteListener(AddTeacher.this, new OnCompleteListener<UploadTask.TaskSnapshot>() {
+        uploadTask.addOnCompleteListener(AddFaculty.this, new OnCompleteListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
 
@@ -234,8 +229,8 @@ public class AddTeacher extends AppCompatActivity {
 
                     pd.dismiss();
 
-                    Toast.makeText(AddTeacher.this, "Opps! Something went wrong.",Toast.LENGTH_SHORT).show();
-                    Toast.makeText(AddTeacher.this, "Try again!",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AddFaculty.this, "Opps! Something went wrong.",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AddFaculty.this, "Try again!",Toast.LENGTH_SHORT).show();
                 }
 
 
@@ -271,7 +266,7 @@ public class AddTeacher extends AppCompatActivity {
 
                 pd.dismiss();
 
-                Toast.makeText(AddTeacher.this, "Faculty details  upload: Success!",Toast.LENGTH_SHORT).show();
+                Toast.makeText(AddFaculty.this, "Faculty details  upload: Success!",Toast.LENGTH_SHORT).show();
 
             }
         }).addOnFailureListener(new OnFailureListener() {
@@ -282,8 +277,8 @@ public class AddTeacher extends AppCompatActivity {
 
                 pd.dismiss();
 
-                Toast.makeText(AddTeacher.this, "Opps! Something went wrong.",Toast.LENGTH_SHORT).show();
-                Toast.makeText(AddTeacher.this, "Try again.",Toast.LENGTH_SHORT).show();
+                Toast.makeText(AddFaculty.this, "Opps! Something went wrong.",Toast.LENGTH_SHORT).show();
+                Toast.makeText(AddFaculty.this, "Try again.",Toast.LENGTH_SHORT).show();
 
             }
         });

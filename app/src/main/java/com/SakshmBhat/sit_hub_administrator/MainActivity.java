@@ -7,7 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
-import com.SakshmBhat.sit_hub_administrator.faculty_list.UpdateFaculty;
+import com.SakshmBhat.sit_hub_administrator.faculty_list.UpdateAndAddFaculty;
 
  public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -58,7 +58,7 @@ import com.SakshmBhat.sit_hub_administrator.faculty_list.UpdateFaculty;
 
             case R.id.editFacultyDetailsCard:
 
-                        intent = new Intent(MainActivity.this, UpdateFaculty.class);
+                        intent = new Intent(MainActivity.this, UpdateAndAddFaculty.class);
                         startActivity(intent);
                         break;
         }

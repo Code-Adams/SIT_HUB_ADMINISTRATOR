@@ -25,5 +25,18 @@
     <string name="Mechanical_Engineering">Mechanical Engineering</string>
     <string name="Electronics_And_Communication_Engineering">Electronics&amp;Communication Engineering</string>
     <string name="Telecommunication_Engineering">Telecommunication engineering</string>
+    <string name="Electronics_And_Instrumentation_Engineering">Electronics&amp;Instrumentation Engineering</string>
+    <string name="Mathematics">Mathematics</string>
+    <string name="Physics">Physics</string>
+    <string name="Chemical_Engineering">Chemical Engineering</string>
+    <string name="Chemistry">Chemistry</string>
+    <string name="Biotechnology">Biotechnology</string>
+    <string name="MBA">Master of Business Administration</string>
+    <string name="Architecture">Architecture</string>
+    <string name="Administration_And_Non_Teaching">Administration&amp;Non-Teaching</string>
+    <string name="Instrumentation_Engineering">Instrumentation Engineering</string>
+    <string name="Industrial_Engineering_And_Management">Industrial Engineering&amp;Management</string>
+    <string name="Update">Update</string>
+    <string name="Delete_Faculty">Delete Faculty</string>
 
 </resources>
