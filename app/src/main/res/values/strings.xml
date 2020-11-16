@@ -18,4 +18,12 @@
     <string name="Upload_Teacher_Button_Text">Add Faculty</string>
     <string name="Email">Email</string>
     <string name="Post">Post</string>
+    <string name="No_Record_Available">No record available</string>
+    <string name="Update_Info">Update info</string>
+    <string name="Information_Science_engineering">Information Science&amp;Engineering</string>
+    <string name="Computer_Science_And_Engineering">Computer Science&amp;Engineering</string>
+    <string name="Mechanical_Engineering">Mechanical Engineering</string>
+    <string name="Electronics_And_Communication_Engineering">Electronics&amp;Communication Engineering</string>
+    <string name="Telecommunication_Engineering">Telecommunication engineering</string>
+
 </resources>
