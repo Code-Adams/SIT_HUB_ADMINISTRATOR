@@ -38,5 +38,7 @@
     <string name="Industrial_Engineering_And_Management">Industrial Engineering&amp;Management</string>
     <string name="Update">Update</string>
     <string name="Delete_Faculty">Delete Faculty</string>
-
+    <string name="Namma_SIT">NAMMA SIT</string>
+    <string name="Delete">Delete</string>
+    <string name="Title_Will_Load_Here">Title will load here!!</string>
 </resources>

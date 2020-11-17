@@ -1,6 +1,5 @@
 package com.SakshmBhat.sit_hub_administrator.faculty_list;
 
-import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
@@ -38,7 +37,7 @@ import java.util.regex.Pattern;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class UpdateFaculty extends AppCompatActivity {
+public class UpdateFacultyActivity extends AppCompatActivity {
 
     private CircleImageView facultyCircleImageView;
     private EditText  updatedName, updatedPost,updatedEmail;
@@ -110,7 +109,7 @@ public class UpdateFaculty extends AppCompatActivity {
                 if(!oldImageUrl.isEmpty() || bitmap!=null){
                 //If Circle image view is clicked, ask user if he/she wants to remove picture or add new image
                 //First build a dialog
-                dialogBuilder = new AlertDialog.Builder(UpdateFaculty.this);
+                dialogBuilder = new AlertDialog.Builder(UpdateFacultyActivity.this);
                 dialogBuilder.setTitle("Choose action:");
                 //Create negative and positive responses and add click listener to them.
                 dialogBuilder.setPositiveButton("Add new Image", new DialogInterface.OnClickListener() {
@@ -137,8 +136,12 @@ public class UpdateFaculty extends AppCompatActivity {
                     }
                 });
                 //create dialog box and show it
-                dialogBox = dialogBuilder.create();
-                dialogBox.show();
+                    try {
+                        dialogBox = dialogBuilder.create();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    dialogBox.show();
 
             }else{
                     openGallery();
@@ -164,11 +167,41 @@ public class UpdateFaculty extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                deleteFaculty();
+                    //If delete button  is clicked, ask user if he/she is sure removing the faculty
+                    //First build a dialog
+                    dialogBuilder = new AlertDialog.Builder(UpdateFacultyActivity.this);
+                    dialogBuilder.setTitle("Are you sure?");
+                    dialogBuilder.setMessage("Delete '"+updatedName.getText().toString()+"' permanently:");
+                    //Create negative and positive responses and add click listener to them.
+                    dialogBuilder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+
+                            dialogBox.dismiss();
+                            deleteFaculty();
+
+                        }
+                    });
+                    dialogBuilder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+
+                            //Do nothing just dismiss the dialog box
+                            dialogBox.dismiss();
+
+
+                        }
+                    });
+                    //create dialog box and show it
+                try {
+                    dialogBox = dialogBuilder.create();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                dialogBox.show();
 
             }
         });
-
 
 
     }
@@ -186,8 +219,8 @@ public class UpdateFaculty extends AppCompatActivity {
 
                         //Stop the progress dialog as the upload is complete
                         pd.dismiss();
-                        Toast.makeText(UpdateFaculty.this, "Faculty deletion: Success!",Toast.LENGTH_SHORT).show();
-                        Intent intent= new Intent(UpdateFaculty.this,UpdateAndAddFaculty.class);
+                        Toast.makeText(UpdateFacultyActivity.this, "Faculty deletion: Success!",Toast.LENGTH_SHORT).show();
+                        Intent intent= new Intent(UpdateFacultyActivity.this, UpdateAndAddFacultyActivity.class);
                         //Prevent user from coming back on pressing back button
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(intent);
@@ -200,8 +233,8 @@ public class UpdateFaculty extends AppCompatActivity {
                 //stop the progress dialog if the upload fails
                 pd.dismiss();
 
-                Toast.makeText(UpdateFaculty.this, "Opps! Something went wrong.",Toast.LENGTH_SHORT).show();
-                Toast.makeText(UpdateFaculty.this, "Try again.",Toast.LENGTH_SHORT).show();
+                Toast.makeText(UpdateFacultyActivity.this, "Opps! Something went wrong.",Toast.LENGTH_SHORT).show();
+                Toast.makeText(UpdateFacultyActivity.this, "Try again.",Toast.LENGTH_SHORT).show();
 
             }
         });
@@ -276,7 +309,7 @@ public class UpdateFaculty extends AppCompatActivity {
         final UploadTask uploadTask = imageFilePath.putBytes(finalImageForUpload);
 
         //add complete task listener to get path(URL) of image and store it in database
-        uploadTask.addOnCompleteListener(UpdateFaculty.this, new OnCompleteListener<UploadTask.TaskSnapshot>() {
+        uploadTask.addOnCompleteListener(UpdateFacultyActivity.this, new OnCompleteListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
 
@@ -312,8 +345,8 @@ public class UpdateFaculty extends AppCompatActivity {
 
                     pd.dismiss();
 
-                    Toast.makeText(UpdateFaculty.this, "Opps! Something went wrong.",Toast.LENGTH_SHORT).show();
-                    Toast.makeText(UpdateFaculty.this, "Try again!",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(UpdateFacultyActivity.this, "Opps! Something went wrong.",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(UpdateFacultyActivity.this, "Try again!",Toast.LENGTH_SHORT).show();
                 }
 
 
@@ -341,8 +374,8 @@ public class UpdateFaculty extends AppCompatActivity {
 
                 //Stop the progress dialog as the upload is complete
                 pd.dismiss();
-                Toast.makeText(UpdateFaculty.this, "Faculty details  upload: Success!",Toast.LENGTH_SHORT).show();
-                Intent intent= new Intent(UpdateFaculty.this,UpdateAndAddFaculty.class);
+                Toast.makeText(UpdateFacultyActivity.this, "Faculty details  upload: Success!",Toast.LENGTH_SHORT).show();
+                Intent intent= new Intent(UpdateFacultyActivity.this, UpdateAndAddFacultyActivity.class);
                 //Prevent user from coming back on pressing back button
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
@@ -356,8 +389,8 @@ public class UpdateFaculty extends AppCompatActivity {
                 //stop the progress dialog if the upload fails
                 pd.dismiss();
 
-                Toast.makeText(UpdateFaculty.this, "Opps! Something went wrong.",Toast.LENGTH_SHORT).show();
-                Toast.makeText(UpdateFaculty.this, "Try again.",Toast.LENGTH_SHORT).show();
+                Toast.makeText(UpdateFacultyActivity.this, "Opps! Something went wrong.",Toast.LENGTH_SHORT).show();
+                Toast.makeText(UpdateFacultyActivity.this, "Try again.",Toast.LENGTH_SHORT).show();
 
             }
         });

@@ -1,4 +1,4 @@
-package com.SakshmBhat.sit_hub_administrator;
+package com.SakshmBhat.sit_hub_administrator.feed;
 
 public class FeedData {
 

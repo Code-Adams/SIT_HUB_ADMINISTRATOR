@@ -31,10 +31,8 @@ import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 
-public class UploadGalleryImage extends AppCompatActivity {
+public class UploadGalleryImageActivity extends AppCompatActivity {
 
     private Spinner imageCategory;
     private CardView selectImage;
@@ -103,13 +101,13 @@ public class UploadGalleryImage extends AppCompatActivity {
                 
                 if(bitmap == null){
                     
-                    Toast.makeText(UploadGalleryImage.this, "Error: No image selected!",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(UploadGalleryImageActivity.this, "Error: No image selected!",Toast.LENGTH_SHORT).show();
                     
                 }//Now check if user has selected a category from drop down
                 else if(categorySelected.equals("Select Category")){
 
-                    Toast.makeText(UploadGalleryImage.this, "Category required for upload.",Toast.LENGTH_SHORT).show();
-                    Toast.makeText(UploadGalleryImage.this, "Please Select a category",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(UploadGalleryImageActivity.this, "Category required for upload.",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(UploadGalleryImageActivity.this, "Please Select a category",Toast.LENGTH_SHORT).show();
                     
                 }else{
                     
@@ -142,7 +140,7 @@ public class UploadGalleryImage extends AppCompatActivity {
         final UploadTask uploadTask = imageFilePath.putBytes(finalImageForUpload);
 
         //add complete task listener to get path(URL) of image and store it in database
-        uploadTask.addOnCompleteListener(UploadGalleryImage.this, new OnCompleteListener<UploadTask.TaskSnapshot>() {
+        uploadTask.addOnCompleteListener(UploadGalleryImageActivity.this, new OnCompleteListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
 
@@ -176,8 +174,8 @@ public class UploadGalleryImage extends AppCompatActivity {
 
                     pd.dismiss();
 
-                    Toast.makeText(UploadGalleryImage.this, "Opps! Something went wrong.",Toast.LENGTH_SHORT).show();
-                    Toast.makeText(UploadGalleryImage.this, "Try again!",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(UploadGalleryImageActivity.this, "Opps! Something went wrong.",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(UploadGalleryImageActivity.this, "Try again!",Toast.LENGTH_SHORT).show();
                 }
 
 
@@ -201,7 +199,7 @@ public class UploadGalleryImage extends AppCompatActivity {
                 //Stop the progress dialog as the upload is complete
                 pd.dismiss();
 
-                Toast.makeText(UploadGalleryImage.this, "Image upload: Success!",Toast.LENGTH_SHORT).show();
+                Toast.makeText(UploadGalleryImageActivity.this, "Image upload: Success!",Toast.LENGTH_SHORT).show();
 
             }
         }).addOnFailureListener(new OnFailureListener() {
@@ -211,8 +209,8 @@ public class UploadGalleryImage extends AppCompatActivity {
                 //stop the progress dialog if the upload fails
                 pd.dismiss();
 
-                Toast.makeText(UploadGalleryImage.this, "Opps! Something went wrong.",Toast.LENGTH_SHORT).show();
-                Toast.makeText(UploadGalleryImage.this, "Try Again",Toast.LENGTH_SHORT).show();
+                Toast.makeText(UploadGalleryImageActivity.this, "Opps! Something went wrong.",Toast.LENGTH_SHORT).show();
+                Toast.makeText(UploadGalleryImageActivity.this, "Try Again",Toast.LENGTH_SHORT).show();
 
             }
         });

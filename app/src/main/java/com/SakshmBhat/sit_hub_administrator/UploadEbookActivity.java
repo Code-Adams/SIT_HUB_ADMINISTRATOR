@@ -9,15 +9,12 @@ import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.database.Cursor;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.provider.OpenableColumns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,10 +28,9 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.HashMap;
 
-public class UploadEbook extends AppCompatActivity {
+public class UploadEbookActivity extends AppCompatActivity {
 
     private CardView selectEbook;
     private  final int REQ=1;
@@ -98,7 +94,7 @@ public class UploadEbook extends AppCompatActivity {
 
             }else if(ebookUri == null){
 
-                Toast.makeText(UploadEbook.this,"Please select an ebook.",Toast.LENGTH_SHORT).show();
+                Toast.makeText(UploadEbookActivity.this,"Please select an ebook.",Toast.LENGTH_SHORT).show();
 
                 }else{
 
@@ -138,7 +134,7 @@ public class UploadEbook extends AppCompatActivity {
             public void onFailure(@NonNull Exception e) {
 
                 pd.dismiss();
-                Toast.makeText(UploadEbook.this, "Opps! Something went wrong.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(UploadEbookActivity.this, "Opps! Something went wrong.", Toast.LENGTH_SHORT).show();
 
             }
         });
@@ -162,7 +158,7 @@ public class UploadEbook extends AppCompatActivity {
 
                 pd.dismiss();
 
-                Toast.makeText(UploadEbook.this, "Ebook upload successful", Toast.LENGTH_SHORT).show();
+                Toast.makeText(UploadEbookActivity.this, "Ebook upload successful", Toast.LENGTH_SHORT).show();
                 nameOfTheFileSelected.setText("");
                 ebookTitle.setText("");
 
@@ -173,8 +169,8 @@ public class UploadEbook extends AppCompatActivity {
 
                 pd.dismiss();
 
-                Toast.makeText(UploadEbook.this, "Ebook upload failed.", Toast.LENGTH_SHORT).show();
-                Toast.makeText(UploadEbook.this, "Try again.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(UploadEbookActivity.this, "Ebook upload failed.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(UploadEbookActivity.this, "Try again.", Toast.LENGTH_SHORT).show();
                 
             }
         });
@@ -198,7 +194,7 @@ public class UploadEbook extends AppCompatActivity {
         try {
             startActivityForResult(Intent.createChooser(intent, "Select Your .pdf File"), REQ);
         } catch (ActivityNotFoundException e) {
-            Toast.makeText(UploadEbook.this, "Please Install a File Manager",Toast.LENGTH_SHORT).show();
+            Toast.makeText(UploadEbookActivity.this, "Please Install a File Manager",Toast.LENGTH_SHORT).show();
         }
 
     }
@@ -215,7 +211,7 @@ public class UploadEbook extends AppCompatActivity {
 
                 Cursor cursor = null;
                 try {
-                    cursor = UploadEbook.this.getContentResolver().query(ebookUri,null,null,null,null);
+                    cursor = UploadEbookActivity.this.getContentResolver().query(ebookUri,null,null,null,null);
 
                     if (cursor!=null && cursor.moveToFirst()){
 

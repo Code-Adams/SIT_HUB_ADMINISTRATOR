@@ -1,4 +1,4 @@
-package com.SakshmBhat.sit_hub_administrator;
+package com.SakshmBhat.sit_hub_administrator.feed;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -17,6 +17,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.SakshmBhat.sit_hub_administrator.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -32,7 +33,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
-public class UploadFeed extends AppCompatActivity {
+public class UploadFeedActivity extends AppCompatActivity {
 
     private CardView uploadImage;//addImage
     private  final int REQ=1;
@@ -45,7 +46,7 @@ public class UploadFeed extends AppCompatActivity {
 
     private Button uploadFeedBtn; //uploadnoticeButton
 
-    private DatabaseReference databaseReference;
+    private DatabaseReference databaseReference,dbRef;
     private StorageReference  storageReference;
 
     String downloadUrl = "";// Initialise as null
@@ -61,7 +62,7 @@ public class UploadFeed extends AppCompatActivity {
 
         storageReference = FirebaseStorage.getInstance().getReference();
 
-        databaseReference = FirebaseDatabase.getInstance().getReference();
+        databaseReference = FirebaseDatabase.getInstance().getReference().child("Feed");
 
         feedTitle =findViewById(R.id.feedTitleField);
 
@@ -107,9 +108,9 @@ public class UploadFeed extends AppCompatActivity {
 
     private void uploadDataMethod() {
 
-      databaseReference = databaseReference.child("Feed");
+      dbRef=databaseReference;
 
-      final String uniqueKey = databaseReference.push().getKey();
+      final String uniqueKey = dbRef.push().getKey();
 
       String feedTitleString = feedTitle.getText().toString();
 
@@ -129,7 +130,7 @@ public class UploadFeed extends AppCompatActivity {
 
       //Save feed data details in firebase
 
-        databaseReference.child(uniqueKey).setValue(feedData).addOnSuccessListener(new OnSuccessListener<Void>() {
+        dbRef.child(uniqueKey).setValue(feedData).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
 
@@ -137,7 +138,7 @@ public class UploadFeed extends AppCompatActivity {
 
                 pd.dismiss();
 
-                Toast.makeText(UploadFeed.this, "Feed upload: Success!",Toast.LENGTH_SHORT).show();
+                Toast.makeText(UploadFeedActivity.this, "Feed upload: Success!",Toast.LENGTH_SHORT).show();
 
             }
         }).addOnFailureListener(new OnFailureListener() {
@@ -148,7 +149,7 @@ public class UploadFeed extends AppCompatActivity {
 
                 pd.dismiss();
 
-                Toast.makeText(UploadFeed.this, "Opps! Something went wrong.",Toast.LENGTH_SHORT).show();
+                Toast.makeText(UploadFeedActivity.this, "Opps! Something went wrong.",Toast.LENGTH_SHORT).show();
 
             }
         });
@@ -178,7 +179,7 @@ public class UploadFeed extends AppCompatActivity {
         final UploadTask uploadTask = imageFilePath.putBytes(finalImageForUpload);
 
         //add complete task listener to get path(URL) of image and store it in database
-        uploadTask.addOnCompleteListener(UploadFeed.this, new OnCompleteListener<UploadTask.TaskSnapshot>() {
+        uploadTask.addOnCompleteListener(UploadFeedActivity.this, new OnCompleteListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
 
@@ -213,8 +214,8 @@ public class UploadFeed extends AppCompatActivity {
 
                     pd.dismiss();
 
-                    Toast.makeText(UploadFeed.this, "Opps! Something went wrong.",Toast.LENGTH_SHORT).show();
-                    Toast.makeText(UploadFeed.this, "Try again!",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(UploadFeedActivity.this, "Opps! Something went wrong.",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(UploadFeedActivity.this, "Try again!",Toast.LENGTH_SHORT).show();
                 }
 
 

@@ -38,7 +38,7 @@ import java.util.regex.Pattern;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class AddFaculty extends AppCompatActivity {
+public class AddFacultyActivity extends AppCompatActivity {
 
     private CircleImageView teacherImageView;
     private EditText facultyName, facultyEmail, facultyPost;
@@ -140,13 +140,13 @@ public class AddFaculty extends AppCompatActivity {
 
         }else if(deptSelected.equals("Select Department")){
 
-            Toast.makeText(AddFaculty.this, "Error: No department selected! Select one to proceed.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(AddFacultyActivity.this, "Error: No department selected! Select one to proceed.", Toast.LENGTH_SHORT).show();
             
         }else if(bitmap==null){
 
            //If image is not selected confirm from user if he/she is sure?
             //First build a dialog
-            dialogBuilder = new AlertDialog.Builder(AddFaculty.this);
+            dialogBuilder = new AlertDialog.Builder(AddFacultyActivity.this);
             dialogBuilder.setTitle("Proceed without an image?");
             //Create negative and positive responses and add click listener to them.
             dialogBuilder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
@@ -167,7 +167,11 @@ public class AddFaculty extends AppCompatActivity {
                 }
             });
             //create dialog box and show it
-            dialogBox = dialogBuilder.create();
+            try {
+                dialogBox = dialogBuilder.create();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
             dialogBox.show();
 
         }else{
@@ -209,7 +213,7 @@ public class AddFaculty extends AppCompatActivity {
         final UploadTask uploadTask = imageFilePath.putBytes(finalImageForUpload);
 
         //add complete task listener to get path(URL) of image and store it in database
-        uploadTask.addOnCompleteListener(AddFaculty.this, new OnCompleteListener<UploadTask.TaskSnapshot>() {
+        uploadTask.addOnCompleteListener(AddFacultyActivity.this, new OnCompleteListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
 
@@ -245,8 +249,8 @@ public class AddFaculty extends AppCompatActivity {
 
                     pd.dismiss();
 
-                    Toast.makeText(AddFaculty.this, "Opps! Something went wrong.",Toast.LENGTH_SHORT).show();
-                    Toast.makeText(AddFaculty.this, "Try again!",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AddFacultyActivity.this, "Opps! Something went wrong.",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AddFacultyActivity.this, "Try again!",Toast.LENGTH_SHORT).show();
                 }
 
 
@@ -282,7 +286,7 @@ public class AddFaculty extends AppCompatActivity {
 
                 pd.dismiss();
 
-                Toast.makeText(AddFaculty.this, "Faculty details  upload: Success!",Toast.LENGTH_SHORT).show();
+                Toast.makeText(AddFacultyActivity.this, "Faculty details  upload: Success!",Toast.LENGTH_SHORT).show();
 
             }
         }).addOnFailureListener(new OnFailureListener() {
@@ -293,8 +297,8 @@ public class AddFaculty extends AppCompatActivity {
 
                 pd.dismiss();
 
-                Toast.makeText(AddFaculty.this, "Opps! Something went wrong.",Toast.LENGTH_SHORT).show();
-                Toast.makeText(AddFaculty.this, "Try again.",Toast.LENGTH_SHORT).show();
+                Toast.makeText(AddFacultyActivity.this, "Opps! Something went wrong.",Toast.LENGTH_SHORT).show();
+                Toast.makeText(AddFacultyActivity.this, "Try again.",Toast.LENGTH_SHORT).show();
 
             }
         });

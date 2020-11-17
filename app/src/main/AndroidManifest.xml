@@ -12,12 +12,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".faculty_list.UpdateFaculty"></activity>
-        <activity android:name=".faculty_list.AddFaculty" />
-        <activity android:name=".faculty_list.UpdateAndAddFaculty" />
-        <activity android:name=".UploadEbook" />
-        <activity android:name=".UploadGalleryImage" />
-        <activity android:name=".UploadFeed" />
+        <activity android:name=".feed.DeleteFeedActivity"></activity>
+        <activity android:name=".faculty_list.UpdateFacultyActivity" />
+        <activity android:name=".faculty_list.AddFacultyActivity" />
+        <activity android:name=".faculty_list.UpdateAndAddFacultyActivity" />
+        <activity android:name=".UploadEbookActivity" />
+        <activity android:name=".UploadGalleryImageActivity" />
+        <activity android:name=".feed.UploadFeedActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
