@@ -74,7 +74,7 @@ public class AddFacultyActivity extends AppCompatActivity {
 
         storageReference  = FirebaseStorage.getInstance().getReference();
 
-        String[] spinnerDeptList = new String[]{"Select Department","ISE","CSE","ECE","ME","TE","EIE","CE","IE","IEM","Maths","Physics","Chemistry","BT","MBA","Architecture","Administration and Non-teaching"};
+        String[] spinnerDeptList = new String[]{"Select Department","ISE","CSE","AD","ECE","ME","TE","EIE","CE","IE","IEM","Maths","Physics","Chemistry","BT","MBA","Architecture","Administration and Non-teaching"};
 
         //Give categories listed in 'items' to the spinner(drop down)
         facultyDeptSpinner.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item,spinnerDeptList));

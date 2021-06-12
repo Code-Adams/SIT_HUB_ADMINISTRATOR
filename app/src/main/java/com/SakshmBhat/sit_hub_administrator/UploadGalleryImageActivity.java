@@ -192,7 +192,7 @@ public class UploadGalleryImageActivity extends AppCompatActivity {
 
         //Save image Url to Database
 
-        databaseReference.child(uniqueKey).setValue(downloadUrl).addOnSuccessListener(new OnSuccessListener<Void>() {
+        databaseReferencetwo.child(uniqueKey).setValue(downloadUrl).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
 

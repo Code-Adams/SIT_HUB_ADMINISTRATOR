@@ -26,11 +26,11 @@ public class UpdateAndAddFacultyActivity extends AppCompatActivity {
 
     FloatingActionButton fAB;
 
-    private RecyclerView ISE,CSE,ECE,ME,TE,EIE,CE,IE,IEM,Maths,Physics,Chemistry,BT,MBA,Architecture,AandNT;
+    private RecyclerView ISE,AD,CSE,ECE,ME,TE,EIE,CE,IE,IEM,Maths,Physics,Chemistry,BT,MBA,Architecture,AandNT;
 
-    private LinearLayout ISEnoData,CSEnoData,ECEnoData,MEnoData,TEnoData,EIEnoData,CEnoData,IEnoData,IEMnoData,MathsNoData,PhysicsNoData,ChemistryNoData,BTnoData,MBAnoData,ArchitectureNoData,AandNTnoData;
+    private LinearLayout ISEnoData,CSEnoData,ADnoData,ECEnoData,MEnoData,TEnoData,EIEnoData,CEnoData,IEnoData,IEMnoData,MathsNoData,PhysicsNoData,ChemistryNoData,BTnoData,MBAnoData,ArchitectureNoData,AandNTnoData;
 
-    private List<FacultyAttributes> ISE_list,CSE_list,ECE_list,ME_list,TE_list,EIE_list,CE_list,IE_list,IEM_list,Maths_list,Physics_list,Chemistry_list,BT_list,MBA_list,Architecture_list,AandNT_list;
+    private List<FacultyAttributes> ISE_list,AD_list,CSE_list,ECE_list,ME_list,TE_list,EIE_list,CE_list,IE_list,IEM_list,Maths_list,Physics_list,Chemistry_list,BT_list,MBA_list,Architecture_list,AandNT_list;
 
     private DatabaseReference databaseReference,dbRef;
 
@@ -44,6 +44,7 @@ public class UpdateAndAddFacultyActivity extends AppCompatActivity {
 
         fAB=findViewById(R.id.floatingAB);
 
+        AD=findViewById(R.id.ADFacultyRecycler);
         ISE=findViewById(R.id.ISEFacultyRecycler);
         CSE=findViewById(R.id.CSEFacultyRecycler);
         ECE=findViewById(R.id.ECEFacultyRecycler);
@@ -62,6 +63,7 @@ public class UpdateAndAddFacultyActivity extends AppCompatActivity {
         AandNT=findViewById(R.id.NTFacultyRecycler);
 
 
+        ADnoData=findViewById(R.id.ADfacultyDataNotFound);
         ISEnoData=findViewById(R.id.ISEfacultyDataNotFound);
         CSEnoData=findViewById(R.id.CSEfacultyDataNotFound);
         ECEnoData=findViewById(R.id.ECEfacultyDataNotFound);
@@ -97,6 +99,8 @@ public class UpdateAndAddFacultyActivity extends AppCompatActivity {
         btDepartment();
         mbaDepartment();
         architectureDepartment();
+        adDepartment();
+        ieDepartment();
         ntDepartment();//NON teaching and administration
 
 
@@ -109,6 +113,95 @@ public class UpdateAndAddFacultyActivity extends AppCompatActivity {
                 startActivity(new Intent(UpdateAndAddFacultyActivity.this, AddFacultyActivity.class));
             }
         });
+    }
+
+    private void ieDepartment() {
+
+        dbRef=databaseReference.child("Administration and Non-teaching");
+        dbRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                IE_list = new ArrayList<>();
+
+                if(!snapshot.exists()){
+
+                    IEnoData.setVisibility(View.VISIBLE);
+                    IE.setVisibility(View.GONE);
+                }else{
+
+                    IEnoData.setVisibility(View.GONE);
+                    IE.setVisibility(View.VISIBLE);
+
+                    for(DataSnapshot dataSnapshot: snapshot.getChildren()){
+
+                        FacultyAttributes attributes= dataSnapshot.getValue(FacultyAttributes.class);
+                        IE_list.add(attributes);
+
+                    }
+                    IE.setHasFixedSize(true);
+                    IE.setLayoutManager(new LinearLayoutManager(UpdateAndAddFacultyActivity.this));
+                    recyclerAdapter = new FacultyInfoAdapter(IE_list, UpdateAndAddFacultyActivity.this,"IE");
+                    IE.setAdapter(recyclerAdapter);
+
+                }
+
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+                Toast.makeText(UpdateAndAddFacultyActivity.this,error.getMessage(), Toast.LENGTH_SHORT).show();
+
+            }
+        });
+
+    }
+
+    private void adDepartment() {
+
+        dbRef=databaseReference.child("AD");
+        dbRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                AD_list = new ArrayList<>();
+
+                if(!snapshot.exists()){
+
+                    ADnoData.setVisibility(View.VISIBLE);
+                    AD.setVisibility(View.GONE);
+                }else{
+
+                    ADnoData.setVisibility(View.GONE);
+                    AD.setVisibility(View.VISIBLE);
+
+                    for(DataSnapshot dataSnapshot: snapshot.getChildren()){
+
+                        FacultyAttributes attributes= dataSnapshot.getValue(FacultyAttributes.class);
+                        AD_list.add(attributes);
+
+                    }
+                    AD.setHasFixedSize(true);
+                    AD.setLayoutManager(new LinearLayoutManager(UpdateAndAddFacultyActivity.this));
+                    recyclerAdapter = new FacultyInfoAdapter(AD_list, UpdateAndAddFacultyActivity.this,"AD");
+                    AD.setAdapter(recyclerAdapter);
+
+                }
+
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+                Toast.makeText(UpdateAndAddFacultyActivity.this,error.getMessage(), Toast.LENGTH_SHORT).show();
+
+            }
+        });
+
+
     }
 
     private void ntDepartment() {
