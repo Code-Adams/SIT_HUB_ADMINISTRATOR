@@ -42,4 +42,9 @@
     <string name="Delete">Delete</string>
     <string name="Title_Will_Load_Here">Title will load here!</string>
     <string name="Artificial_Intelligence_and_Data_Science">Artificial Intelligence and Data Science</string>
+    <string name="OTP_Instruction">You will receive a One Time Password(OTP) on below number:</string>
+    <string name="Verify_OTP"><u>Verify Otp</u></string>
+    <string name="OTP">OTP</string>
+    <string name="Resend_OTP"><u>Resend OTP</u></string>
+    <string name="Counter_Hint">Counter</string>
 </resources>

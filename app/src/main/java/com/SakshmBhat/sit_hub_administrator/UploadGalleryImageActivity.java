@@ -69,7 +69,7 @@ public class UploadGalleryImageActivity extends AppCompatActivity {
         pd = new ProgressDialog(this);
 
         //List all categories to be given in the drop down in a string variable
-        String[] items = new String[]{"Select Category","A","B","C","D"};
+        String[] items = new String[]{"Select Category","Infrastructure","Incubation Cell","Research","Sports","Campus"};
 
         //Give categories listed in 'items' to the spinner(drop down)
         imageCategory.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item,items));
@@ -187,12 +187,14 @@ public class UploadGalleryImageActivity extends AppCompatActivity {
     private void uploadDataMethod() {
 
         //Define another database reference to point to child of previous reference
-        DatabaseReference databaseReferencetwo = databaseReference.child(categorySelected);
+       // DatabaseReference databaseReferencetwo = databaseReference.child(categorySelected);
         final String uniqueKey = databaseReference.push().getKey();
 
         //Save image Url to Database
 
-        databaseReferencetwo.child(uniqueKey).setValue(downloadUrl).addOnSuccessListener(new OnSuccessListener<Void>() {
+        Toast.makeText(getApplicationContext(), categorySelected, Toast.LENGTH_SHORT).show();
+
+        databaseReference.child(categorySelected).child(uniqueKey).setValue(downloadUrl).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
 
@@ -215,6 +217,8 @@ public class UploadGalleryImageActivity extends AppCompatActivity {
             }
         });
 
+        startActivity(new Intent(UploadGalleryImageActivity.this,MainActivity.class));
+        finish();
 
     }
 

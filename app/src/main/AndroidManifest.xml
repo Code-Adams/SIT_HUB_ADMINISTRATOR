@@ -12,20 +12,22 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".feed.DeleteFeedActivity"></activity>
-        <activity android:name=".faculty_list.UpdateFacultyActivity" />
-        <activity android:name=".faculty_list.AddFacultyActivity" />
-        <activity android:name=".faculty_list.UpdateAndAddFacultyActivity" />
-        <activity android:name=".UploadEbookActivity" />
-        <activity android:name=".UploadGalleryImageActivity" />
-        <activity android:name=".feed.UploadFeedActivity" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".userAuthentication.OtpActivity"></activity>
+        <activity android:name=".userAuthentication.CheckPermissionToRequestOTPActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".feed.DeleteFeedActivity" />
+        <activity android:name=".faculty_list.UpdateFacultyActivity" />
+        <activity android:name=".faculty_list.AddFacultyActivity" />
+        <activity android:name=".faculty_list.UpdateAndAddFacultyActivity" />
+        <activity android:name=".UploadEbookActivity" />
+        <activity android:name=".UploadGalleryImageActivity" />
+        <activity android:name=".feed.UploadFeedActivity" />
+        <activity android:name=".MainActivity" />
     </application>
 
-</manifest> 
+</manifest>
