@@ -110,6 +110,7 @@
         android:layout_below="@+id/otpAndOtherContainer"
         android:textAllCaps="false"
         android:text="@string/Verify_OTP"
+        android:enabled="false"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"/>
 

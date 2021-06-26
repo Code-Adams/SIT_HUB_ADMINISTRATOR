@@ -101,12 +101,27 @@
             android:hint="Club's Name(will be username)"
             android:layout_marginHorizontal="30dp"
             android:id="@+id/clubName"/>
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:hint="@string/club_type"
+            android:layout_marginHorizontal="30dp"
+            android:id="@+id/clubType"/>
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:hint="Webpage Url with 'http' header\n(you can skip this field)"
+            android:layout_marginHorizontal="30dp"
+            android:id="@+id/clubWebpageUrl"/>
 
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:lines="10"
+            android:nestedScrollingEnabled="true"
             android:hint="Club's Description."
             android:layout_marginHorizontal="30dp"
             android:id="@+id/clubDescription"/>

@@ -50,29 +50,13 @@ public class UploadGalleryImageActivity extends AppCompatActivity {
     private DatabaseReference databaseReference;
     private StorageReference storageReference;
     
-    String downloadUrl;
+    String downloadUrl,clubName=null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_upload_gallery_image);
-
-        selectImage = findViewById(R.id.uploadGalleryImage);
-        imageCategory = findViewById(R.id.imageCategorySpinner);
-        uploadImageBtn= findViewById(R.id.uploadGalleryImageButton);
-        imagePreview = findViewById(R.id.galleryImagePreview);
-
-        databaseReference = FirebaseDatabase.getInstance().getReference().child("Gallery");
-        storageReference = FirebaseStorage.getInstance().getReference().child("Gallery");
-
-        //Set progress dialog for this activity
-        pd = new ProgressDialog(this);
-
-        //List all categories to be given in the drop down in a string variable
-        String[] items = new String[]{"Select Category","Infrastructure","Incubation Cell","Research","Sports","Campus"};
-
-        //Give categories listed in 'items' to the spinner(drop down)
-        imageCategory.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item,items));
+        initialize();
 
         //If any category is selected then get that category in a string
         imageCategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -104,7 +88,7 @@ public class UploadGalleryImageActivity extends AppCompatActivity {
                     Toast.makeText(UploadGalleryImageActivity.this, "Error: No image selected!",Toast.LENGTH_SHORT).show();
                     
                 }//Now check if user has selected a category from drop down
-                else if(categorySelected.equals("Select Category")){
+                else if(imageCategory.getVisibility()==View.VISIBLE && categorySelected.equals("Select Category")){
 
                     Toast.makeText(UploadGalleryImageActivity.this, "Category required for upload.",Toast.LENGTH_SHORT).show();
                     Toast.makeText(UploadGalleryImageActivity.this, "Please Select a category",Toast.LENGTH_SHORT).show();
@@ -123,18 +107,49 @@ public class UploadGalleryImageActivity extends AppCompatActivity {
 
     }
 
+    private void initialize() {
+
+        selectImage = findViewById(R.id.uploadGalleryImage);
+        imageCategory = findViewById(R.id.imageCategorySpinner);
+        uploadImageBtn= findViewById(R.id.uploadGalleryImageButton);
+        imagePreview = findViewById(R.id.galleryImagePreview);
+
+        //databaseReference = FirebaseDatabase.getInstance().getReference().child("Gallery");
+        storageReference = FirebaseStorage.getInstance().getReference().child("Gallery");
+
+        //Set progress dialog for this activity
+        pd = new ProgressDialog(UploadGalleryImageActivity.this);
+
+        clubName=getIntent().getStringExtra("clubName");
+
+        if(clubName.isEmpty()) {
+            //List all categories to be given in the drop down in a string variable
+            String[] items = new String[]{"Select Category", "Infrastructure", "Incubation Cell", "Research", "Sports", "Campus"};
+
+            //Give categories listed in 'items' to the spinner(drop down)
+            imageCategory.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, items));
+        }else{
+            imageCategory.setVisibility(View.GONE);
+        }
+
+    }
+
     private void uploadImageMethod() {
 
         ByteArrayOutputStream BAOS = new ByteArrayOutputStream();
 
         //Compress image before upload
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 50, BAOS);
+        bitmap.compress(Bitmap.CompressFormat.WEBP, 50, BAOS);
         byte[] finalImageForUpload =BAOS.toByteArray();
 
         //Creating file path
         final StorageReference imageFilePath;
 
-        imageFilePath = storageReference.child(finalImageForUpload + "jpg");
+        if(imageCategory.getVisibility()==View.VISIBLE) {
+            imageFilePath = storageReference.child("college").child(categorySelected).child(finalImageForUpload + "webp");
+        }else{
+            imageFilePath=storageReference.child("clubs").child(getIntent().getStringExtra("clubName").trim()).child(finalImageForUpload + "webp");
+        }
 
         //Creating task to upload image
         final UploadTask uploadTask = imageFilePath.putBytes(finalImageForUpload);
@@ -174,7 +189,7 @@ public class UploadGalleryImageActivity extends AppCompatActivity {
 
                     pd.dismiss();
 
-                    Toast.makeText(UploadGalleryImageActivity.this, "Opps! Something went wrong.",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(UploadGalleryImageActivity.this, "Oops! Something went wrong.",Toast.LENGTH_SHORT).show();
                     Toast.makeText(UploadGalleryImageActivity.this, "Try again!",Toast.LENGTH_SHORT).show();
                 }
 
@@ -186,15 +201,19 @@ public class UploadGalleryImageActivity extends AppCompatActivity {
 
     private void uploadDataMethod() {
 
-        //Define another database reference to point to child of previous reference
-       // DatabaseReference databaseReferencetwo = databaseReference.child(categorySelected);
-        final String uniqueKey = databaseReference.push().getKey();
-
         //Save image Url to Database
 
-        Toast.makeText(getApplicationContext(), categorySelected, Toast.LENGTH_SHORT).show();
+        if(imageCategory.getVisibility()==View.VISIBLE){
 
-        databaseReference.child(categorySelected).child(uniqueKey).setValue(downloadUrl).addOnSuccessListener(new OnSuccessListener<Void>() {
+            databaseReference=FirebaseDatabase.getInstance().getReference().child("Gallery").child(categorySelected);
+
+        }else {
+            databaseReference=FirebaseDatabase.getInstance().getReference().child("Gallery").child("clubs").child(clubName);
+        }
+        final String uniqueKey = databaseReference.push().getKey();
+
+
+        databaseReference.child(uniqueKey).setValue(downloadUrl).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
 
@@ -202,6 +221,8 @@ public class UploadGalleryImageActivity extends AppCompatActivity {
                 pd.dismiss();
 
                 Toast.makeText(UploadGalleryImageActivity.this, "Image upload: Success!",Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(UploadGalleryImageActivity.this,MainActivity.class));
+                finish();
 
             }
         }).addOnFailureListener(new OnFailureListener() {
@@ -211,14 +232,12 @@ public class UploadGalleryImageActivity extends AppCompatActivity {
                 //stop the progress dialog if the upload fails
                 pd.dismiss();
 
-                Toast.makeText(UploadGalleryImageActivity.this, "Opps! Something went wrong.",Toast.LENGTH_SHORT).show();
+                Toast.makeText(UploadGalleryImageActivity.this, "Oops! Something went wrong.",Toast.LENGTH_SHORT).show();
                 Toast.makeText(UploadGalleryImageActivity.this, "Try Again",Toast.LENGTH_SHORT).show();
 
             }
         });
 
-        startActivity(new Intent(UploadGalleryImageActivity.this,MainActivity.class));
-        finish();
 
     }
 

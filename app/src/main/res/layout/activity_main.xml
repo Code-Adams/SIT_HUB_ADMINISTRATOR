@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/mainActivity"
-    android:visibility="visible"
+    android:visibility="gone"
     tools:context=".MainActivity"
     android:orientation="vertical">
     

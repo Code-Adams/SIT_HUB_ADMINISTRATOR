@@ -30,12 +30,14 @@ import com.google.firebase.database.ValueEventListener;
      CardView uploadFeed, uploadGalleryImage, uploadEbook, editFacultydetails,deleteFeed;
      LinearLayout mainActivity,hideForStudent;
      String phoneNumber,userType;
+     String clubName="";
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         hideForStudent=findViewById(R.id.hideForStudent);
         mainActivity=findViewById(R.id.mainActivity);
 
@@ -75,6 +77,7 @@ import com.google.firebase.database.ValueEventListener;
                                    userType=String.valueOf(snapshot.child(phoneNumber).child("userType").getValue());
                                    if(userType.equals("Student Club")){
                                       hideForStudent.setVisibility(View.GONE);
+                                      clubName=String.valueOf(snapshot.child(phoneNumber).child("clubName").getValue());
                                    }
                                    mainActivity.setVisibility(View.VISIBLE);
                                    initialize();
@@ -233,6 +236,7 @@ import com.google.firebase.database.ValueEventListener;
             case R.id.addGalleryImageCard:
                         intent =new Intent(MainActivity.this, UploadGalleryImageActivity.class);
                         intent.putExtra("userType",userType);
+                        intent.putExtra("clubName",clubName);
                         intent.putExtra("phoneNumber",phoneNumber);
                         startActivity(intent);
                         break;

@@ -53,4 +53,5 @@
     <string name="Get_OTP">Get OTP</string>
     <string name="date">Date</string>
     <string name="username_comes_here">userName comes here</string>
+    <string name="club_type">Club Type</string>
 </resources>

@@ -125,6 +125,7 @@ public class OtpActivity extends AppCompatActivity {
             dialog.dismiss();
             verifyBtn.setTextColor(Color.parseColor("#000000"));
             Toast.makeText(OtpActivity.this, "OTP Sent", Toast.LENGTH_SHORT).show();
+            verifyBtn.setEnabled(true);
             super.onCodeSent(s, forceResendingToken);
             mVerificationId = s;
 

@@ -44,7 +44,7 @@ public class GetAndSetAdminDetailsActivity extends AppCompatActivity {
 
     private Spinner  adminUserType;
     private LinearLayout circleImageViewsContainer, userImageContainer, clubLogoImageContainer;
-    private EditText userName,ClubName,clubDescription;
+    private EditText userName,ClubName,clubDescription,clubType,clubWebpageUrl;
     private Button submitButton;
     private CircleImageView userImage, clubLogoImage;
     private ImageView userIdProof;
@@ -156,6 +156,10 @@ public class GetAndSetAdminDetailsActivity extends AppCompatActivity {
             ClubName.setError("Max char: 15");
             ClubName.requestFocus();
 
+        }else if(clubType.getText().toString().trim().isEmpty()){
+            clubType.setError("Required Field!");
+            clubType.requestFocus();
+
         }else if(clubDescription.getText().toString().trim().isEmpty()){
             clubDescription.setError("Required Field");
             clubDescription.requestFocus();
@@ -182,70 +186,6 @@ public class GetAndSetAdminDetailsActivity extends AppCompatActivity {
             pd.show();
 
              uploadUserImage(userImageBitmap,idProofBitmap,clubImageBitmap);
-//            StudentClubUserData studentClubUserData = new StudentClubUserData("0", userName.getText().toString().trim(), ClubName.getText().toString().trim(), userImageDownloadUrl, "Student Club", idProofDownloadUrl,clubLogoImageDownloadUrl,phoneNumber);
-//
-//            FirebaseDatabase.getInstance().getReference().child("AdminAppAccess").child(phoneNumber).setValue(studentClubUserData).addOnSuccessListener(new OnSuccessListener<Void>() {
-//                @Override
-//                public void onSuccess(Void unused) {
-//                    Toast.makeText(GetAndSetAdminDetailsActivity.this, "User Data upload: Success", Toast.LENGTH_SHORT).show();
-//                }
-//            }).addOnFailureListener(new OnFailureListener() {
-//                @Override
-//                public void onFailure(@NonNull  Exception e) {
-//                    pd.dismiss();
-//                    AlertDialog.Builder builder = new AlertDialog.Builder(
-//                            GetAndSetAdminDetailsActivity.this);
-//                    builder.setTitle("Upload Failure");
-//                    builder.setMessage("Failed to upload details.\nCheck data connection.\nContact Sys-Admin.");
-//                    builder.setPositiveButton("OK",
-//                            new DialogInterface.OnClickListener() {
-//                                public void onClick(DialogInterface dialog,
-//                                                    int which) {
-//                                }
-//                            });
-//                    builder.show();
-//                }
-//            });
-//
-//            ClubData clubData = new ClubData(ClubName.getText().toString().trim(),clubDescription.getText().toString().trim(),clubLogoImageDownloadUrl,"0");
-//
-//            FirebaseDatabase.getInstance().getReference().child("ClubsOfSIT").child(ClubName.getText().toString().trim()).setValue(clubData).addOnSuccessListener(new OnSuccessListener<Void>() {
-//                @Override
-//                public void onSuccess(Void unused) {
-//                    Toast.makeText(GetAndSetAdminDetailsActivity.this, "Club Data upload: Success", Toast.LENGTH_SHORT).show();
-//
-//                    Handler h =new Handler() ;
-//                    h.postDelayed(new Runnable() {
-//                        public void run() {
-//                            //put your code here
-//                            pd.dismiss();
-//                            Intent intent= new Intent(GetAndSetAdminDetailsActivity.this,MainActivity.class);
-//                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-//                            startActivity(intent);
-//                            finish();
-//                        }
-//
-//                    }, 4000);
-//
-//
-//                }
-//            }).addOnFailureListener(new OnFailureListener() {
-//                @Override
-//                public void onFailure(@NonNull  Exception e) {
-//                    pd.dismiss();
-//                    AlertDialog.Builder builder = new AlertDialog.Builder(
-//                            GetAndSetAdminDetailsActivity.this);
-//                    builder.setTitle("Upload Failure");
-//                    builder.setMessage("Failed to upload details.\nCheck data connection.\nContact Sys-Admin.");
-//                    builder.setPositiveButton("OK",
-//                            new DialogInterface.OnClickListener() {
-//                                public void onClick(DialogInterface dialog,
-//                                                    int which) {
-//                                }
-//                            });
-//                    builder.show();
-//                }
-//            });
         }
 
     }
@@ -296,42 +236,6 @@ public class GetAndSetAdminDetailsActivity extends AppCompatActivity {
             pd.show();
             uploadUserImage(userImageBitmap,idProofBitmap,clubImageBitmap);
 
-//            sitOfficialAdminUserData = new SitOfficialAdminUserData("0", userName.getText().toString().trim(), userImageUrl, "SIT Faculty",  idProofUrl,phoneNumber);
-//
-//            FirebaseDatabase.getInstance().getReference().child("AdminAppAccess").child(phoneNumber).setValue(sitOfficialAdminUserData).addOnSuccessListener(new OnSuccessListener<Void>() {
-//                @Override
-//                public void onSuccess(Void unused) {
-//                    Handler h =new Handler() ;
-//                    h.postDelayed(new Runnable() {
-//                        public void run() {
-//                            //put your code here
-//                            pd.dismiss();
-//                            Toast.makeText(GetAndSetAdminDetailsActivity.this, "Success!", Toast.LENGTH_SHORT).show();
-//                            Intent intent= new Intent(GetAndSetAdminDetailsActivity.this,MainActivity.class);
-//                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-//                            startActivity(intent);
-//                            finish();
-//                        }
-//
-//                    }, 4000);
-//                }
-//            }).addOnFailureListener(new OnFailureListener() {
-//                @Override
-//                public void onFailure(@NonNull  Exception e) {
-//                    pd.dismiss();
-//                    AlertDialog.Builder builder = new AlertDialog.Builder(
-//                            GetAndSetAdminDetailsActivity.this);
-//                    builder.setTitle("Upload Failure");
-//                    builder.setMessage("Failed to upload details.\nCheck data connection.\nContact Sys-Admin.");
-//                    builder.setPositiveButton("OK",
-//                            new DialogInterface.OnClickListener() {
-//                                public void onClick(DialogInterface dialog,
-//                                                    int which) {
-//                                }
-//                            });
-//                    builder.show();
-//                }
-//            });
         }
 
     }
@@ -519,7 +423,7 @@ public class GetAndSetAdminDetailsActivity extends AppCompatActivity {
 
         String phoneNumber= FirebaseAuth.getInstance().getCurrentUser().getPhoneNumber();
 
-        uploadUserImage(userImageBitmap,idProofBitmap,clubImageBitmap);
+      //  uploadUserImage(userImageBitmap,idProofBitmap,clubImageBitmap);
 
         StudentClubUserData studentClubUserData = new StudentClubUserData("0", userName.getText().toString().trim(), ClubName.getText().toString().trim(), userImageUrl, "Student Club", idProofImageUrl,clubLogoImageUrl,phoneNumber);
 
@@ -527,6 +431,8 @@ public class GetAndSetAdminDetailsActivity extends AppCompatActivity {
             @Override
             public void onSuccess(Void unused) {
                 Toast.makeText(GetAndSetAdminDetailsActivity.this, "User Data upload: Success", Toast.LENGTH_SHORT).show();
+
+
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -546,35 +452,44 @@ public class GetAndSetAdminDetailsActivity extends AppCompatActivity {
             }
         });
 
-        ClubData clubData = new ClubData(ClubName.getText().toString().trim(),clubDescription.getText().toString().trim(),clubLogoImageUrl,"0");
+
+        String url;
+        if(String.valueOf(clubWebpageUrl.getText()).isEmpty()) {
+            url = "noLink";
+        }else{
+            url = String.valueOf(clubWebpageUrl.getText()) ;
+        }
+        String clubWebpage=url;
+        ClubData clubData = new ClubData(ClubName.getText().toString().trim(),clubDescription.getText().toString().trim(),clubLogoImageUrl,"0",phoneNumber,String.valueOf(clubType.getText()),clubWebpage);
 
         FirebaseDatabase.getInstance().getReference().child("ClubsOfSIT").child(ClubName.getText().toString().trim()).setValue(clubData).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void unused) {
                 Toast.makeText(GetAndSetAdminDetailsActivity.this, "Club Data upload: Success", Toast.LENGTH_SHORT).show();
 
-                Handler h =new Handler() ;
-                h.postDelayed(new Runnable() {
-                    public void run() {
-                        //put your code here
-                        pd.dismiss();
+                pd.dismiss();
 
-                        AlertDialog.Builder builder = new AlertDialog.Builder(
-                                GetAndSetAdminDetailsActivity.this);
-                        builder.setCancelable(false);
-                        builder.setTitle("Upload Success");
-                        builder.setMessage("Reopen app now.");
-                        builder.setPositiveButton("OK",
-                                new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog,
-                                                        int which) {
-                                        finish();
-                                    }
-                                });
-                        builder.show();
-                    }
-
-                }, 4000);
+                AlertDialog.Builder builder = new AlertDialog.Builder(
+                        GetAndSetAdminDetailsActivity.this);
+                builder.setCancelable(false);
+                builder.setTitle("Upload Success");
+                builder.setMessage("Reopen app now.");
+                builder.setPositiveButton("OK",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog,
+                                                int which) {
+                                finish();
+                            }
+                        });
+//                builder.show();
+//                Handler h =new Handler() ;
+//                h.postDelayed(new Runnable() {
+//                    public void run() {
+//                        //put your code here
+//
+//                    }
+//
+//                }, 4000);
 
 
             }
@@ -595,6 +510,7 @@ public class GetAndSetAdminDetailsActivity extends AppCompatActivity {
                 builder.show();
             }
         });
+
 
     }
 
@@ -668,6 +584,9 @@ public class GetAndSetAdminDetailsActivity extends AppCompatActivity {
                ClubName.setVisibility(View.GONE);
                clubDescription.setVisibility(View.GONE);
 
+               clubWebpageUrl.setVisibility(View.GONE);
+               clubType.setVisibility(View.GONE);
+
                 submitButton.setVisibility(View.VISIBLE);
 
           }
@@ -682,6 +601,9 @@ public class GetAndSetAdminDetailsActivity extends AppCompatActivity {
                ClubName.setVisibility(View.VISIBLE);
                clubDescription.setVisibility(View.VISIBLE);
 
+               clubWebpageUrl.setVisibility(View.VISIBLE);
+               clubType.setVisibility(View.VISIBLE);
+
                submitButton.setVisibility(View.VISIBLE);
 
            }else{
@@ -694,6 +616,8 @@ public class GetAndSetAdminDetailsActivity extends AppCompatActivity {
 
                ClubName.setVisibility(View.GONE);
                clubDescription.setVisibility(View.GONE);
+               clubWebpageUrl.setVisibility(View.GONE);
+               clubType.setVisibility(View.GONE);
 
                submitButton.setVisibility(View.GONE);
 
@@ -744,6 +668,12 @@ public class GetAndSetAdminDetailsActivity extends AppCompatActivity {
         userImageUrlTV=findViewById(R.id.userImageUrlTV);
         clubLogoImageUrlTV=findViewById(R.id.clubLogoImageUrlTV);
         idProofImageUrlTV=findViewById(R.id.idProofImageUrlTV);
+
+        clubType=findViewById(R.id.clubType);
+        clubType.setVisibility(View.GONE);
+
+        clubWebpageUrl=findViewById(R.id.clubWebpageUrl);
+        clubWebpageUrl.setVisibility(View.GONE);
 
         pd= new ProgressDialog(GetAndSetAdminDetailsActivity.this);
 
