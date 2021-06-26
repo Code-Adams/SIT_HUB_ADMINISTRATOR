@@ -41,7 +41,7 @@ public class UploadEbookActivity extends AppCompatActivity {
     private DatabaseReference databaseReference;
     private StorageReference storageReference;
 
-    String downloadUrl = "";
+    String downloadUrl = "",phoneNumber;
 
     private ProgressDialog pd;
 
@@ -54,6 +54,8 @@ public class UploadEbookActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_upload_ebook);
+
+        phoneNumber=getIntent().getStringExtra("phoneNumber");
 
         nameOfTheFileSelected = findViewById(R.id.selectedFileName);
 
@@ -111,6 +113,7 @@ public class UploadEbookActivity extends AppCompatActivity {
 
         pd.setTitle("Please wait.");
         pd.setMessage("Uploading...");
+        pd.setCancelable(false);
         pd.show();
 
         StorageReference storageReferencetwo = storageReference.child("Ebook/"+ebookName+"-"+ System.currentTimeMillis()+".pdf");
@@ -150,6 +153,7 @@ public class UploadEbookActivity extends AppCompatActivity {
         HashMap ebook = new HashMap();
         ebook.put("ebookTitle",ebookTitleText);
         ebook.put("ebookUrl", eBookDownloadUrl);
+        ebook.put("uploader",phoneNumber);
 
         //Uploading ebook Url along with its Title
         databaseReference.child("Ebook").child(uniqueKey).setValue(ebook).addOnSuccessListener(new OnSuccessListener<Void>() {

@@ -22,6 +22,10 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 }
 
 dependencies {
@@ -47,8 +51,7 @@ dependencies {
     //please wait animation
     implementation 'com.jpardogo.googleprogressbar:library:1.2.0'
 
-    //Firebase phone number auth
-    implementation 'com.google.android.gms:play-services-auth:19.0.0'
-    implementation 'com.google.android.gms:play-services-auth-api-phone:17.5.1'
+    //Air BnB splash screen animation
+    implementation 'com.airbnb.android:lottie:3.7.0'
 
 }

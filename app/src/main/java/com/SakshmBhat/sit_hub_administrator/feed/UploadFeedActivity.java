@@ -5,9 +5,14 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -15,15 +20,22 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.SakshmBhat.sit_hub_administrator.MainActivity;
 import com.SakshmBhat.sit_hub_administrator.R;
+import com.SakshmBhat.sit_hub_administrator.userAuthentication.CheckPermissionToRequestOTPActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -42,14 +54,20 @@ public class UploadFeedActivity extends AppCompatActivity {
 
     private ImageView imagePreview;
 
-    private EditText feedTitle; //Notice title
+    private LinearLayout linkTextnUrlContainer;
 
-    private Button uploadFeedBtn; //uploadnoticeButton
+    private EditText feedTitle, linkText,linkUrl; //Notice title
+
+    private Button uploadFeedBtn,addLink,cancelLink; //uploadnoticeButton
 
     private DatabaseReference databaseReference,dbRef;
     private StorageReference  storageReference;
 
-    String downloadUrl = "";// Initialise as null
+    String linkUrlStr="noLink",linkTextStr="noLink";
+
+    String uploaderUserName, uploaderProfilePicUrl;
+
+    String downloadUrl = "",userType,phoneNumber;// Initialise as null
 
     private ProgressDialog  pd;
 
@@ -58,6 +76,27 @@ public class UploadFeedActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_upload_feed);
 
+        phoneNumber=getIntent().getStringExtra("phoneNumber");
+        userType=getIntent().getStringExtra("userType");
+
+        if(!checkConnectivity()){
+            AlertDialog.Builder builder = new AlertDialog.Builder(
+                    UploadFeedActivity.this);
+            builder.setTitle("No Internet");
+            builder.setCancelable(false);
+            builder.setMessage("Close app.");
+            builder.setPositiveButton("OK",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog,
+                                            int which) {
+                            finish();
+                        }
+                    });
+            builder.show();
+
+        }
+
+
         pd = new ProgressDialog(this);
 
         storageReference = FirebaseStorage.getInstance().getReference();
@@ -65,11 +104,33 @@ public class UploadFeedActivity extends AppCompatActivity {
         databaseReference = FirebaseDatabase.getInstance().getReference().child("Feed");
 
         feedTitle =findViewById(R.id.feedTitleField);
+        linkText=findViewById(R.id.linkText);
+        linkUrl=findViewById(R.id.linkUrl);
+        addLink=findViewById(R.id.addLink);
+        cancelLink=findViewById(R.id.cancelLink);
+        linkTextnUrlContainer=findViewById(R.id.linkTextnUrlContainer);
 
         uploadFeedBtn = findViewById(R.id.uploadFeedButton);
 
         uploadImage= findViewById(R.id.uploadImageCard);
         imagePreview = findViewById(R.id.feedImagePreview);
+
+        addLink.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                linkTextnUrlContainer.setVisibility(View.VISIBLE);
+                addLink.setEnabled(false);
+            }
+        });
+        cancelLink.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                linkTextnUrlContainer.setVisibility(View.GONE);
+                addLink.setEnabled(true);
+                linkUrl.getText().clear();
+                linkText.getText().clear();
+            }
+        });
 
         uploadImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -89,11 +150,40 @@ public class UploadFeedActivity extends AppCompatActivity {
 
                     feedTitle.setError("Feed title required to proceed!");
                     feedTitle.requestFocus();
+                }else if(linkTextnUrlContainer.getVisibility()==View.VISIBLE && linkUrl.getText().toString().trim().isEmpty()){
+                    linkUrl.setError("Url is required!");
+                    linkUrl.requestFocus();
+                }
+                else if(linkTextnUrlContainer.getVisibility()==View.VISIBLE && linkText.getText().toString().trim().isEmpty()){
 
+                    linkText.setError("Link Text is required!");
+                    linkText.requestFocus();
+
+                }else if(linkTextnUrlContainer.getVisibility()==View.VISIBLE && linkText.getText().toString().trim().length()>30){
+                    linkText.setError("Max char:30");
+                    linkText.requestFocus();
                 }
                 else if(bitmap==null){
+                    AlertDialog.Builder builder = new AlertDialog.Builder(
+                            UploadFeedActivity.this);
+                    builder.setTitle("No Image selected");
+                    builder.setMessage("Continue without an image?");
+                    builder.setPositiveButton("OK",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog,
+                                                    int which) {
+                                    pd.setMessage("Uploading...");
+                                    pd.show();
+                                    uploadDataMethod();
+                                }
+                            });
+                    builder.setNegativeButton("cancel", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
 
-                    uploadDataMethod();
+                        }
+                    });
+                    builder.show();
                 }
                 else{
 
@@ -105,6 +195,7 @@ public class UploadFeedActivity extends AppCompatActivity {
         });
 
     }
+
 
     private void uploadDataMethod() {
 
@@ -124,38 +215,78 @@ public class UploadFeedActivity extends AppCompatActivity {
         SimpleDateFormat currentTime = new SimpleDateFormat("hh:mm:ss a");
         String uploadTime = currentTime.format(calenderForUploadTime.getTime());
 
-      //Make a FeedData Java Class object to store all attributes in one obj
+        if(linkTextnUrlContainer.getVisibility()==View.VISIBLE){
+            linkUrlStr= linkUrl.getText().toString().trim();
+            linkTextStr=linkText.getText().toString().trim();
+        }else{
+            linkUrlStr= "noLink";
+            linkTextStr="noLink";
+        }
 
-        FeedData feedData = new FeedData(feedTitleString,downloadUrl,uploadDate,uploadTime,uniqueKey);
-
-      //Save feed data details in firebase
-
-        dbRef.child(uniqueKey).setValue(feedData).addOnSuccessListener(new OnSuccessListener<Void>() {
+        FirebaseDatabase.getInstance().getReference().child("AdminAppAccess").child(phoneNumber).addValueEventListener(new ValueEventListener() {
             @Override
-            public void onSuccess(Void aVoid) {
+            public void onDataChange(@NonNull  DataSnapshot snapshot) {
+                if(snapshot.exists()){
+                    if(userType.equals("SIT Faculty")){
+                        uploaderUserName=String.valueOf(snapshot.child("name").getValue()).trim();
+                        uploaderProfilePicUrl=String.valueOf(snapshot.child("imageUrl").getValue()).trim();
+                    }else{
+                        uploaderUserName=String.valueOf(snapshot.child("clubName").getValue()).trim();
+                        uploaderProfilePicUrl=String.valueOf(snapshot.child("clubLogoUrl").getValue()).trim();
 
-                //Stop the progress dialog as the upload is complete
+                    }
 
-                pd.dismiss();
+                    FeedData feedData = new FeedData(feedTitleString,downloadUrl,uploadDate,uploadTime,uniqueKey,linkUrlStr,linkTextStr,uploaderUserName,uploaderProfilePicUrl);
+                    //Save feed data details in firebase
 
-                Toast.makeText(UploadFeedActivity.this, "Feed upload: Success!",Toast.LENGTH_SHORT).show();
+                    dbRef.child(uniqueKey).setValue(feedData).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
 
+                            FirebaseDatabase.getInstance().getReference().child("FeedByAdmin").child(phoneNumber).child(uniqueKey).setValue(feedData).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void unused) {
+
+                                    pd.dismiss();
+                                    Toast.makeText(UploadFeedActivity.this, "Upload: Success!", Toast.LENGTH_SHORT).show();
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull  Exception e) {
+
+                                    pd.dismiss();
+                                    Toast.makeText(UploadFeedActivity.this, "Opps! Something went wrong.",Toast.LENGTH_SHORT).show();
+
+                                }
+                            });
+
+
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+
+                            //stop the progress dialog if the upload fails
+
+                            pd.dismiss();
+
+                            Toast.makeText(UploadFeedActivity.this, "Opps! Something went wrong.",Toast.LENGTH_SHORT).show();
+
+                        }
+                    });
+
+                }
             }
-        }).addOnFailureListener(new OnFailureListener() {
+
             @Override
-            public void onFailure(@NonNull Exception e) {
+            public void onCancelled(@NonNull  DatabaseError error) {
 
-                //stop the progress dialog if the upload fails
 
-                pd.dismiss();
-
-                Toast.makeText(UploadFeedActivity.this, "Opps! Something went wrong.",Toast.LENGTH_SHORT).show();
 
             }
         });
 
     }
-
 
     private void uploadImageMethod() {
 
@@ -166,13 +297,13 @@ public class UploadFeedActivity extends AppCompatActivity {
         ByteArrayOutputStream BAOS = new ByteArrayOutputStream();
 
         //Compress image before upload
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 50, BAOS);
+        bitmap.compress(Bitmap.CompressFormat.WEBP, 50, BAOS);
         byte[] finalImageForUpload =BAOS.toByteArray();
 
         //Creating file path
         final StorageReference imageFilePath;
 
-        imageFilePath = storageReference.child("Feed").child(finalImageForUpload + "jpg");
+        imageFilePath = storageReference.child("Feed").child(finalImageForUpload + "webp");
 
         //Creating task to upload image
 
@@ -248,6 +379,16 @@ public class UploadFeedActivity extends AppCompatActivity {
             //Set bitmap to show image preview
             imagePreview.setImageBitmap(bitmap);
         }
-
+    }
+    public boolean checkConnectivity() {
+        boolean connected = false;
+        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        if (connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
+                connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED) {
+            //we are connected to a network
+            connected = true;
+        } else
+            connected = false;
+        return connected;
     }
 }

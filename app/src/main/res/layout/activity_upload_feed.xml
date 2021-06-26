@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp"
+    android:layout_margin="5dp"
     tools:context=".feed.UploadFeedActivity">
 
     <LinearLayout
@@ -67,7 +68,58 @@
                 android:id="@+id/feedTitleField"
                 android:hint="@string/Feed_Title" />
         </com.google.android.material.textfield.TextInputLayout>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/addLink"
+            android:text="Add Link?"
+            android:textAllCaps="false"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:orientation="vertical"
+            android:id="@+id/linkTextnUrlContainer">
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:weightSum="10"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="7"
+                    android:id="@+id/linkUrl"
+                    android:hint="Paste your Url here"
+                    android:textColor="@color/blue"/>
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:layout_weight="3"
+                    android:textAllCaps="false"
+                    android:text="Cancel"
+                    android:textSize="12sp"
+                    android:id="@+id/cancelLink"/>
+
+
+
+            </LinearLayout>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:textColor="#808080"
+                android:id="@+id/linkText"
+                android:hint="Put Link Text here"
+                android:textSize="18sp"/>
+        </LinearLayout>
         <com.google.android.material.button.MaterialButton
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

@@ -7,10 +7,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.SakshmBhat.sit_hub_administrator.R;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -26,6 +28,8 @@ public class DeleteFeedActivity extends AppCompatActivity {
     private ProgressBar progressBar;
     private ArrayList<FeedData> list;
     private FeedAdapter feedAdapter;
+    private LinearLayout noDataFound;
+    String phoneNumber;
 
     private DatabaseReference databaseReference;
 
@@ -35,9 +39,13 @@ public class DeleteFeedActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_delete_feed);
 
+        phoneNumber=getIntent().getStringExtra("phoneNumber");
+
         feedRecycler=findViewById(R.id.deleteFeedRecycler);
         progressBar=findViewById(R.id.progressBar);
         databaseReference=FirebaseDatabase.getInstance().getReference();
+        noDataFound=findViewById(R.id.noDataFound);
+
 
         feedRecycler.setLayoutManager(new LinearLayoutManager(this));
         feedRecycler.setHasFixedSize(true);
@@ -47,24 +55,32 @@ public class DeleteFeedActivity extends AppCompatActivity {
 
     private void getFeed() {
 
-        databaseReference.child("Feed").addValueEventListener(new ValueEventListener() {
+        String phoneNumber= FirebaseAuth.getInstance().getCurrentUser().getPhoneNumber();
+
+        databaseReference.child("FeedByAdmin").child(phoneNumber).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
                 list = new ArrayList<>();
-                for(DataSnapshot dataSnapshot: snapshot.getChildren()){
+                if(snapshot.exists()) {
+                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
 
-                    FeedData feedData= dataSnapshot.getValue(FeedData.class);
-                    list.add(feedData);
+                        FeedData feedData = dataSnapshot.getValue(FeedData.class);
+                        list.add(feedData);
 
+                    }
+
+                    noDataFound.setVisibility(View.GONE);
+                    feedAdapter = new FeedAdapter(DeleteFeedActivity.this, list,phoneNumber);
+                    //notify the adapter that new data is available so that adapter can reset it
+                    feedAdapter.notifyDataSetChanged();
+                    //As recycler is reset disable progress bar
+                    progressBar.setVisibility(View.GONE);
+                    feedRecycler.setAdapter(feedAdapter);
+                }else{
+                    noDataFound.setVisibility(View.VISIBLE);
+                    Toast.makeText(DeleteFeedActivity.this, "No Feed Available", Toast.LENGTH_SHORT).show();
                 }
-
-                feedAdapter = new FeedAdapter(DeleteFeedActivity.this,list);
-                //notify the adapter that new data is available so that adapter can reset it
-                feedAdapter.notifyDataSetChanged();
-               //As recycler is reset disable progress bar
-                progressBar.setVisibility(View.GONE);
-                feedRecycler.setAdapter(feedAdapter);
 
             }
 

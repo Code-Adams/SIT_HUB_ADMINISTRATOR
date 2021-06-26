@@ -41,6 +41,7 @@ public class OtpActivity extends AppCompatActivity {
     private TextView resendOTP,timer;
     private Dialog dialog;
     private FirebaseUser mCurrentUser;
+    private TextView phoneNumberDisplay,getOtp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +50,37 @@ public class OtpActivity extends AppCompatActivity {
 
         initialize();
 
-        getOtpOnCreate();
+        getOtp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                getOtpOnCreate();
+                getOtp.setVisibility(View.GONE);
+
+            }
+        });
+
+
+        resendOTP.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getOtpOnCreate();
+                resendOTP.setVisibility(View.GONE);
+            }
+        });
+
+        verifyBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(otp.getText().toString().trim().isEmpty()){
+                    otp.setError("Invalid OTP");
+                    otp.requestFocus();
+                }else{
+                    verifyCode(otp.getText().toString().trim());
+                }
+
+            }
+        });
 
     }
 
@@ -59,7 +90,6 @@ public class OtpActivity extends AppCompatActivity {
 
                 getOtpClicked = true;
                 sendVerificationCode(phoneNumber);
-//                getOTP.setTextColor(Color.parseColor("#C0BEBE"));
                 dialog = new Dialog(OtpActivity.this);
                 dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                 dialog.setContentView(R.layout.dialog_wait);
@@ -106,7 +136,7 @@ public class OtpActivity extends AppCompatActivity {
                 @Override
                 public void onTick(long millisUntilFinished) {
 
-                    timer.setText("" + millisUntilFinished/1000);
+                    timer.setText(String.valueOf(millisUntilFinished/1000));
 
                 }
 
@@ -167,6 +197,8 @@ public class OtpActivity extends AppCompatActivity {
 
                                 //dialog.dismiss();
                                 Intent i = new Intent(getApplicationContext(), MainActivity.class);
+                                i.putExtra("phoneNumber",phoneNumber);
+                                i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                                 startActivity(i);
                                 finish();
 
@@ -181,6 +213,8 @@ public class OtpActivity extends AppCompatActivity {
                         }
                     }
                 });
+
+
     }
 
 
@@ -197,5 +231,15 @@ public class OtpActivity extends AppCompatActivity {
         resendOTP = findViewById(R.id.resendOTP);
         timer=findViewById(R.id.countdownTimer);
 
+        phoneNumberDisplay=findViewById(R.id.phoneNumberDisplay);
+        phoneNumberDisplay.setText(phoneNumber);
+        getOtp=findViewById(R.id.getOtp);
+
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
     }
 }

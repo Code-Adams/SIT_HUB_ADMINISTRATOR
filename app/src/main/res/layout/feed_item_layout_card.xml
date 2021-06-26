@@ -2,11 +2,14 @@
 <com.google.android.material.card.MaterialCardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_margin="5dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="4dp"
         android:padding="16dp"
         android:orientation="vertical">
 
@@ -15,45 +18,117 @@
             android:gravity="center_vertical"
             android:orientation="horizontal"
             android:layout_height="wrap_content">
-            
+
             <de.hdodenhof.circleimageview.CircleImageView
-                android:layout_width="36dp"
-                android:layout_height="36dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                app:civ_border_width="2dp"
+                android:id="@+id/feedUploaderProfilePic"
+                app:civ_border_color="#000000"
                 android:src="@drawable/user"/>
 
-            <TextView
+
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
-                android:text="@string/Namma_SIT"
-                android:textSize="18dp"
-                android:textColor="@color/textColour"/>
+                android:layout_marginStart="12dp"
+                android:orientation="vertical">
 
-            <com.google.android.material.button.MaterialButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/deleteFeedBtn"
-                android:text="@string/Delete"
-                android:layout_marginLeft="-100dp"
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"/>
-            
-            
-            
-            
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/feedUploader"
+                    android:text="@string/username_comes_here"
+                    android:textSize="18sp"
+                    android:textColor="#000000"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/date"
+                        android:textSize="14sp"
+                        android:textColor="#000000"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/feedItemDate"
+                        android:text="demoDate"
+                        android:textSize="14sp"
+                        android:textColor="#000000"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="14dp"
+                        android:text="Time"
+                        android:textSize="14sp"
+                        android:textColor="#000000"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/feedItemTime"
+                        android:text="demoTime"
+                        android:textSize="14sp"
+                        android:textColor="#000000"/>
+
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+
         </LinearLayout>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginVertical="14dp"
             android:hint="@string/Title_Will_Load_Here"
-            android:textSize="17sp"
+            android:textSize="18sp"
             android:id="@+id/feedTitleDisplay"
-            android:textColor="@color/textColour"/>
+            android:textColor="#000000"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:visibility="gone"
+            android:id="@+id/feedLinkData">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Link Text Comes here!"
+                android:id="@+id/feedLinkText"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_internal_links_label"
+                android:id="@+id/feedBrowseLink"/>
+        </LinearLayout>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Delete"
+            android:textAllCaps="false"
+            android:textSize="12sp"
+            android:id="@+id/deleteFeedBtn"/>
 
 
         <ImageView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="350dp"
+            android:layout_gravity="center"
             android:id="@+id/feedImageDisplay"
             android:scaleType="fitXY"/>
 
@@ -61,3 +136,7 @@
     </LinearLayout>
 
 </com.google.android.material.card.MaterialCardView>
+
+
+
+

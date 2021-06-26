@@ -8,9 +8,9 @@
     android:layout_gravity="center"
     tools:context=".userAuthentication.CheckPermissionToRequestOTPActivity">
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:layout_width="150dp"
-        android:layout_height="150dp"
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="100dp"
         android:src="@drawable/sit_logo"/>
